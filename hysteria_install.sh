@@ -19,8 +19,7 @@ PASSWORD=''
 while getopts p: opt; do
   case $opt in
     p) PASSWORD=$OPTARG ;;
-    *) echo 'Password[-p] is required'
-       exit 1
+    *) echo 'generate a random password...'
   esac
 done
 

@@ -31,7 +31,9 @@ fi
 if [[ ! -d "/etc/hysteria/" ]]; then
   mkdir /etc/hysteria/
 fi
-sudo openssl req -x509 -nodes -newkey ec:<(openssl ecparam -name prime256v1) -keyout /etc/hysteria/server.key -out /etc/hysteria/server.crt -subj '/CN=bing.com' -days 36500 >&2
+TEMPEDC=$(mktemp)
+openssl ecparam -name prime256v1 -out "$TEMPEDC"
+openssl req -x509 -nodes -newkey ec:"$TEMPEDC" -keyout /etc/hysteria/server.key -out /etc/hysteria/server.crt -subj '/CN=bing.com' -days 36500 >&2
 
 chown hysteria /etc/hysteria/server.key && chown hysteria /etc/hysteria/server.crt
 

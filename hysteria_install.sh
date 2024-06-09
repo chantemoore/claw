@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -euxo pipefail
 
 if [[ "$USER" = 'root' ]];then
   echo 'install sequence starts...'
@@ -28,12 +28,14 @@ if [[ -z "$PASSWORD" ]]; then
 fi
 
 # generate a self-sign certficate
-if [[ ! -d "/etc/hysteria/" ]]; then
+if [[ ! -d "/etc/hysteria/"  ]]; then
   mkdir /etc/hysteria/
+elif [[ ! -d "/var/log/hysteria/" ]]; then
+    mkdir /var/log/hysteria/
 fi
 TEMPEDC=$(mktemp)
-openssl ecparam -name prime256v1 -out "$TEMPEDC" >&2
-openssl req -x509 -nodes -newkey ec:"$TEMPEDC" -keyout /etc/hysteria/server.key -out /etc/hysteria/server.crt -subj '/CN=bing.com' -days 36500 >&2
+openssl ecparam -name prime256v1 -out "$TEMPEDC" 2> /var/log/hysteria/error.log
+openssl req -x509 -nodes -newkey ec:"$TEMPEDC" -keyout /etc/hysteria/server.key -out /etc/hysteria/server.crt -subj '/CN=bing.com' -days 36500 2> /var/log/hysteria/error.log
 
 chown hysteria /etc/hysteria/server.key && chown hysteria /etc/hysteria/server.crt
 

@@ -29,10 +29,10 @@ if [[ -z "$PASSWORD" ]]; then
 fi
 
 # generate a self-sign certficate
-if [[ ! -e "/etc/hysteria/"  ]]; then
+if [[ ! -d "/etc/hysteria/" ]]; then
   mkdir /etc/hysteria/
 fi
-  if [[ ! -e "/var/log/hysteria/" ]]; then
+  if [[ ! -d "/var/log/hysteria/" ]]; then
     mkdir /var/log/hysteria/
   fi
 

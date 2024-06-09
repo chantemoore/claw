@@ -25,7 +25,8 @@ done
 
 if [[ -z "$PASSWORD" ]]; then
   echo 'generate a random password...'
-  PASSWORD="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 10 | head -n 1)"
+#  PASSWORD="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 10 | head -n 1)"
+  PASSWORD="Huzaiisacat"
 fi
 
 # generate a self-sign certficate

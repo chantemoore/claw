@@ -19,11 +19,12 @@ PASSWORD=''
 while getopts p: opt; do
   case $opt in
     p) PASSWORD=$OPTARG ;;
-    *) echo 'generate a random password...'
+    *) echo 'No password assigned...'
   esac
 done
 
 if [[ -z "$PASSWORD" ]]; then
+  echo 'generate a random password...'
   PASSWORD=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 10 | head -n 1)
 fi
 

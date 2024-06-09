@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -euo pipefail
 
 if [[ "$USER" = 'root' ]];then
   echo 'install sequence starts...'
@@ -32,7 +32,7 @@ if [[ ! -d "/etc/hysteria/" ]]; then
   mkdir /etc/hysteria/
 fi
 TEMPEDC=$(mktemp)
-openssl ecparam -name prime256v1 -out "$TEMPEDC"
+openssl ecparam -name prime256v1 -out "$TEMPEDC" >&2
 openssl req -x509 -nodes -newkey ec:"$TEMPEDC" -keyout /etc/hysteria/server.key -out /etc/hysteria/server.crt -subj '/CN=bing.com' -days 36500 >&2
 
 chown hysteria /etc/hysteria/server.key && chown hysteria /etc/hysteria/server.crt

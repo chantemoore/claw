@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euxo pipefail
+trap 'echo "Error on line $LINENO"' ERR
 
 if [[ "$USER" = 'root' ]];then
   echo 'install sequence starts...'
@@ -18,7 +19,7 @@ PASSWORD=''
 while getopts p: opt; do
   case $opt in
     p) PASSWORD=$OPTARG ;;
-    *) echo 'Password[-p] is required' >&2
+    *) echo 'Password[-p] is required'
        exit 1
   esac
 done
@@ -28,11 +29,13 @@ if [[ -z "$PASSWORD" ]]; then
 fi
 
 # generate a self-sign certficate
-if [[ ! -d "/etc/hysteria/"  ]]; then
-  mkdir /etc/hysteria/ >&2
-elif [[ ! -d "/var/log/hysteria/" ]]; then
-  mkdir /var/log/hysteria/ >&2
+if [[ ! -e "/etc/hysteria/"  ]]; then
+  mkdir /etc/hysteria/
 fi
+  if [[ ! -e "/var/log/hysteria/" ]]; then
+    mkdir /var/log/hysteria/
+  fi
+
 TEMPEDC=$(mktemp)
 openssl ecparam -name prime256v1 -out "$TEMPEDC" 2> /var/log/hysteria/error.log
 openssl req -x509 -nodes -newkey ec:"$TEMPEDC" -keyout /etc/hysteria/server.key -out /etc/hysteria/server.crt -subj '/CN=bing.com' -days 36500 2> /var/log/hysteria/error.log

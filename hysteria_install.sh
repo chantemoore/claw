@@ -29,9 +29,9 @@ fi
 
 # generate a self-sign certficate
 if [[ ! -d "/etc/hysteria/"  ]]; then
-  mkdir /etc/hysteria/
+  mkdir /etc/hysteria/ >&2
 elif [[ ! -d "/var/log/hysteria/" ]]; then
-    mkdir /var/log/hysteria/
+  mkdir /var/log/hysteria/ >&2
 fi
 TEMPEDC=$(mktemp)
 openssl ecparam -name prime256v1 -out "$TEMPEDC" 2> /var/log/hysteria/error.log

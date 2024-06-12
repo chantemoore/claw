@@ -12,6 +12,9 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
+# config file
+*.config.json
+
 # IDE
 .idea
 
